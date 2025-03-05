@@ -1,10 +1,10 @@
-# Mudong-JSON : A JSON parser/generator in C++17
+# json-parser-generator : A JSON parser/generator in C++17
 
-[![Actions](https://github.com/moonlightleaf/mudong-json/actions/workflows/cmake-single-platform.yml/badge.svg)](https://github.com/moonlightleaf/mudong-json/actions/workflows/cmake-single-platform.yml)
+[![Actions](https://github.com/moonlightleaf/json-parser-generator/actions/workflows/cmake-single-platform.yml/badge.svg)](https://github.com/moonlightleaf/json-parser-generator/actions/workflows/cmake-single-platform.yml)
 
 ## 项目简介
 
-mudong-json是一款基于C++17开发的header-only JSON解析/生成器，采用递归下降的方式进行解析，支持`DOM(Document Object Model)`和`SAX(Simple API for XML)`两种API风格:
+json-parser-generator是一款基于C++17开发的header-only JSON解析/生成器，采用递归下降的方式进行解析，支持`DOM(Document Object Model)`和`SAX(Simple API for XML)`两种API风格:
 
 * `DOM`是一种基于树状结构的JSON解析模型。在DOM解析中，整个JSON文件被加载到内存中并表示为一个树状结构的对象模型，JSON中的每个元素都对应一个节点，这些节点可以通过编程接口进行访问、遍历和修改。DOM解析允许应用程序以树状结构的方式直接操作JSON数据，但可能需要更多的内存和计算资源，尤其是对于大型文档。DOM的优点是易于编写代码和操作，特别适用于需要频繁随机访问JSON数据的情况。
 * `SAX`是一种基于事件的JSON解析模型。在SAX解析中，JSON文档被顺序解析，当解析器遇到特定的JSON元素或事件（如开始标签、结束标签、文本内容等）时，它会触发相应的事件，从而允许应用程序在处理过程中做出响应。SAX解析器一次只解析文档的一部分，因此适用于处理大型JSON文档，因为它不需要将整个文档加载到内存中。SAX的优点是效率高，占用的内存少，但在代码编写上通常需要更多的处理逻辑。
@@ -32,7 +32,7 @@ mudong-json是一款基于C++17开发的header-only JSON解析/生成器，采�
 
 ## 项目架构
 
-mudong-json定义有三个核心concept，分别是`ReadStream`、`WriteStream`和`Handler`:
+json-parser-generator定义有三个核心concept，分别是`ReadStream`、`WriteStream`和`Handler`:
 
 * `ReadStream`用于读取字符流，目前实现了`StringReadStream`和`FileReadStream`分别用于从内存和文件中读取字符。
 * `WriteStream`用于输出字符流，目前实现了`StringWriteStream`和`FileWriteStream`分别用于向内存和文件中输出字符。
@@ -49,7 +49,7 @@ mudong-json定义有三个核心concept，分别是`ReadStream`、`WriteStream`�
 
 ## 值（Value）
 
-mudong-json中自定义了可变类型数据存储类`Value`，其设计类似于QT中的QVariant和C++17中的Variant，json文档中的每一个元素（DOM树状结构上的叶子节点或子树）都可以用`Value`来存储，是DOM API的核心。其内部维护一个union来存储数据并节约存储空间：
+json-parser-generator中自定义了可变类型数据存储类`Value`，其设计类似于QT中的QVariant和C++17中的Variant，json文档中的每一个元素（DOM树状结构上的叶子节点或子树）都可以用`Value`来存储，是DOM API的核心。其内部维护一个union来存储数据并节约存储空间：
 ```cpp
 union {
     bool                b_;
@@ -216,19 +216,19 @@ int main() {
 
 ## 测试&&性能
 
-mudong-json使用[Google Test](https://github.com/google/googletest)和[Google Benchmark](https://github.com/google/benchmark)进行测试，测试程序见`test`和`bench`目录，测试JSON文件为fastjson提供的真实淘宝网数据。
+json-parser-generator使用[Google Test](https://github.com/google/googletest)和[Google Benchmark](https://github.com/google/benchmark)进行测试，测试程序见`test`和`bench`目录，测试JSON文件为fastjson提供的真实淘宝网数据。
 
 ## 编译&&使用
 
 ```shell
-$ git clone https://github.com/moonlightleaf/mudong-json.git
-$ cd mudong-json
+$ git clone https://github.com/moonlightleaf/json-parser-generator.git
+$ cd json-parser-generator
 $ git submodule update --init --recursive
 $ mkdir build && cd build
 $ cmake [-DCMAKE_BUILD_TESTS=1] [-DCMAKE_BUILD_BENCHMARK=1] [-DCMAKE_BUILD_EXAMPLES=1] ..
 $ make
 ```
-可以通过选择是否添加`-DCMAKE_BUILD_TESTS=1`、`-DCMAKE_BUILD_BENCHMARK=1`、`-DCMAKE_BUILD_EXAMPLES=1`选项，来决定是否要对`test`、`bench`和`example`目录下的文件进行编译。mudong-json只包含头文件，在使用时，只需将mudong-json的头文件拷贝至新项目的`include`路径下即可。
+可以通过选择是否添加`-DCMAKE_BUILD_TESTS=1`、`-DCMAKE_BUILD_BENCHMARK=1`、`-DCMAKE_BUILD_EXAMPLES=1`选项，来决定是否要对`test`、`bench`和`example`目录下的文件进行编译。json-parser-generator只包含头文件，在使用时，只需将json-parser-generator的头文件拷贝至新项目的`include`路径下即可。
 
 ## 参考
 
